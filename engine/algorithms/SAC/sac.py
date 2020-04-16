@@ -13,7 +13,7 @@ from .model import GaussianPolicy, QNetwork, DeterministicPolicy
 
 class SAC(AbstractAgent):
     def __init__(self, state_dim, action_dim, max_action, action_space, gamma, tau, alpha, device, update_interval=1,
-                 policy="Gaussian", automatic_entropy_tuning=False, hidden_size=256, lr=0.0003, start_steps=10000):
+                 policy="Gaussian", automatic_entropy_tuning=True, hidden_size=256, lr=0.0003, start_steps=10000):
         super(SAC, self).__init__(state_dim=state_dim, action_dim=action_dim,
                                   max_action=max_action, device=device)
         self.gamma = gamma
@@ -117,6 +117,8 @@ class SAC(AbstractAgent):
         else:
             alpha_loss = torch.tensor(0.).to(self.device)
             alpha_tlogs = torch.tensor(self.alpha)  # For TensorboardX logs
+        if step_number % 1000 == 0:
+            print('alpha = ', self.alpha)
 
         if step_number % self.update_interval == 0:
             soft_update(self.critic_target, self.critic, self.tau)
