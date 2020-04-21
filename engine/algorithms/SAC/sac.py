@@ -1,4 +1,5 @@
 import os
+import logging
 import torch
 import torch.nn.functional as F
 from torch.optim import Adam
@@ -7,6 +8,7 @@ from engine.algorithms.abstract_agent import AbstractAgent
 from .utils import soft_update, hard_update
 from .model import GaussianPolicy, QNetwork, DeterministicPolicy
 
+logger = logging.getLogger(__name__)
 
 # From: https://github.com/pranz24/pytorch-soft-actor-critic
 
@@ -118,7 +120,7 @@ class SAC(AbstractAgent):
             alpha_loss = torch.tensor(0.).to(self.device)
             alpha_tlogs = torch.tensor(self.alpha)  # For TensorboardX logs
         if step_number % 1000 == 0:
-            print('alpha = ', self.alpha)
+            logger.debug("alpha = {}".format(self.alpha[0]))
 
         if step_number % self.update_interval == 0:
             soft_update(self.critic_target, self.critic, self.tau)
