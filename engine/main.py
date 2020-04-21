@@ -122,6 +122,8 @@ parser.add_argument('--start_steps', type=int, default=10000,
                     help='algorithm to use: Gaussian | Deterministic')
 
 # *********************************** SAC_Poly_Rl Setting ********************************************
+parser.add_argument('--automatic_entropy_tuning', action='store_true',
+                    help='for making reward sparse. Default=False')
 
 args = parser.parse_args()
 
