@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 class SAC(AbstractAgent):
     def __init__(self, state_dim, action_dim, max_action, action_space, gamma, tau, alpha, device, update_interval=1,
-                 policy="Gaussian", automatic_entropy_tuning=True, hidden_size=256, lr=0.0003, start_steps=10000):
+                 policy="Gaussian", automatic_entropy_tuning=False, hidden_size=256, lr=0.0003, start_steps=10000):
         super(SAC, self).__init__(state_dim=state_dim, action_dim=action_dim,
                                   max_action=max_action, device=device)
         self.gamma = gamma
